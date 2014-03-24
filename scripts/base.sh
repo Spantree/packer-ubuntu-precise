@@ -11,13 +11,4 @@ apt-get -y install rsync
 apt-get -y install python-software-properties
 apt-get clean
 
-# Set up sudo
-( cat <<'EOP'
-%vagrant ALL=NOPASSWD:ALL
-EOP
-) > /tmp/vagrant
-chmod 0440 /tmp/vagrant
-mv /tmp/vagrant /etc/sudoers.d/
-
-# Install NFS client
-apt-get -y install nfs-common
+sleep 2s

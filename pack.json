@@ -1,5 +1,27 @@
 {
+  "variables": {
+    "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+    "common_iso_url": "http://releases.ubuntu.com/12.04/ubuntu-12.04.4-server-amd64.iso",
+    "common_iso_checksum": "e83adb9af4ec0a039e6a5c6e145a34de"
+  },
   "builders": [
+    {
+      "access_key": "{{user `aws_access_key`}}",
+      "ami_description": "ubuntu 12.04.4 amd64 spantree ",
+      "ami_name": "ubuntu 12.04.4 amd64 spantree {{isotime | clean_ami_name}}",
+      "instance_type": "m1.medium",
+      "region": "us-east-1",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "source_ami": "ami-59a4a230",
+      "ssh_username": "ubuntu",
+      "tags": {
+        "OS_Version": "Ubuntu",
+        "Release": "precise",
+        "Vendor": "spantree"
+      },
+      "type": "amazon-ebs"
+    },
     {
       "boot_command": [
         "<esc><esc><enter><wait>",
@@ -15,9 +37,9 @@
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "guest_os_type": "Ubuntu_64",
       "http_directory": "http",
-      "iso_checksum": "e83adb9af4ec0a039e6a5c6e145a34de",
+      "iso_checksum": "{{ user `common_iso_checksum` }}",
       "iso_checksum_type": "md5",
-      "iso_url": "http://releases.ubuntu.com/12.04/ubuntu-12.04.4-server-amd64.iso",
+      "iso_url": "{{ user `common_iso_url` }}",
       "shutdown_command": "echo 'shutdown -P now' > shutdown.sh; echo 'vagrant'|sudo -S sh 'shutdown.sh'",
       "ssh_password": "vagrant",
       "ssh_port": 22,
@@ -54,9 +76,9 @@
       "disk_size": 40240,
       "guest_os_type": "ubuntu-64",
       "http_directory": "http",
-      "iso_checksum": "e83adb9af4ec0a039e6a5c6e145a34de",
+      "iso_checksum": "{{ user `common_iso_checksum` }}",
       "iso_checksum_type": "md5",
-      "iso_url": "http://releases.ubuntu.com/12.04/ubuntu-12.04.4-server-amd64.iso",
+      "iso_url": "{{ user `common_iso_url` }}",
       "shutdown_command": "echo 'shutdown -P now' > shutdown.sh; echo 'vagrant'|sudo -S sh 'shutdown.sh'",
       "ssh_password": "vagrant",
       "ssh_port": 22,
@@ -87,10 +109,30 @@
         },
         "vmware-iso": {
           "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'"
+        },
+        "amazon-ebs": {
+          "execute_command": "sudo -S sh '{{.Path}}'"
         }
       },
       "scripts": [
-        "scripts/base.sh",
+        "scripts/base.sh"
+      ],
+      "type": "shell"
+    },
+    {
+      "only": [
+        "virtualbox-iso",
+        "vmware-iso"
+      ],
+      "override": {
+        "virtualbox-iso": {
+          "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'"
+        },
+        "vmware-iso": {
+          "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'"
+        }
+      },
+      "scripts": [
         "scripts/vagrant.sh"
       ],
       "type": "shell"
@@ -116,15 +158,18 @@
         },
         "vmware-iso": {
           "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'"
+        },
+        "amazon-ebs": {
+          "execute_command": "sudo -S sh '{{.Path}}'"
         }
       },
       "scripts": [
-        "scripts/ruby.sh",
         "scripts/puppet.sh",
         "scripts/chef.sh",
         "scripts/oraclejava7.sh",
         "scripts/librarian.sh",
         "scripts/cleanup.sh",
+        "scripts/cleanup-ifs.sh",
         "scripts/zerodisk.sh"
       ],
       "type": "shell"
