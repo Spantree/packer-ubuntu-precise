@@ -6,4 +6,4 @@ apt-get update
 # Install puppet/facter
 apt-get install -y puppet facter
 
-sleep 2s
+sleep 3

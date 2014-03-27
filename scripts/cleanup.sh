@@ -5,6 +5,6 @@ apt-get -y autoremove
 #Clean up tmp
 rm -rf /tmp/*
 
-sleep 2s 
+sleep 3
 
 exit

@@ -1,4 +1,4 @@
-
+sleep 10
 # Apt-install various things necessary for Ruby, guest additions,
 # etc., and remove optional things to trim down the machine.
 apt-get -y update
@@ -11,4 +11,4 @@ apt-get -y install rsync
 apt-get -y install python-software-properties
 apt-get clean
 
-sleep 2s
+sleep 3

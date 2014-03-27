@@ -21,4 +21,4 @@ EOP
 chmod 755 /tmp/set_java_home.sh
 mv /tmp/set_java_home.sh /etc/profile.d/
 
-sleep 2s
+sleep 3
