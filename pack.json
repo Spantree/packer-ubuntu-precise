@@ -34,6 +34,8 @@
       ],
       "boot_wait": "4s",
       "disk_size": 40240,
+      "guest_additions_url": "https://www.virtualbox.org/download/testcase/VBoxGuestAdditions_4.3.11-93070.iso",
+      "guest_additions_sha256": "a1f6a3c35525493d9bbe46b7e288869e8adc7572cfda7b646d6a3b79888678fe",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "guest_os_type": "Ubuntu_64",
       "http_directory": "http",
