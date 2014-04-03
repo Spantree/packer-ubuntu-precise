@@ -186,8 +186,41 @@
         "scripts/oraclejava7.sh",
         "scripts/librarian.sh",
         "scripts/hiera-eyaml.sh",
-        "scripts/cleanup.sh",
-        "scripts/cleanup-ifs.sh",
+        "scripts/cleanup.sh"
+      ],
+      "type": "shell"
+    },
+    {
+      "only": [
+        "virtualbox-iso",
+        "vmware-iso"
+      ],
+      "override": {
+        "virtualbox-iso": {
+          "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'"
+        },
+        "vmware-iso": {
+          "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'"
+        }
+      },
+      "scripts": [
+        "scripts/cleanup-ifs.sh"
+      ],
+      "type": "shell"
+    },
+    {
+      "override": {
+        "virtualbox-iso": {
+          "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'"
+        },
+        "vmware-iso": {
+          "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'"
+        },
+        "amazon-ebs": {
+          "execute_command": "sudo -S sh '{{.Path}}'"
+        }
+      },
+      "scripts": [
         "scripts/zerodisk.sh"
       ],
       "type": "shell"
