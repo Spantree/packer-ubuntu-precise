@@ -6,8 +6,12 @@ rmmod vboxguest
 aptitude -y purge virtualbox-ose-guest-x11 virtualbox-ose-guest-dkms virtualbox-ose-guest-utils
 aptitude -y install dkms
 
+CURDIR=$(PWD)
 mount -t iso9660 -o loop "linux.iso" /mnt
 tar xzvf /mnt/VMware*.tar.gz -C /tmp
 cd /tmp/vmware-tools-distrib/
 ./vmware-install.pl -d
+cd ${CURDIR}
+umount /mnt
+rm -rf linux.iso
 

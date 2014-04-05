@@ -1,3 +1,7 @@
+echo "Performing one last sitewide upgrade"
+apt-get update 
+apt-get -y dist-upgrade
+
 echo "Cleaning home directory for vagrant user"
 cd $HOME
 rm -rf *.*
